@@ -3,483 +3,1002 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Virtual Interactive Processing Service | VIP Zoom Presentation Access</title>
+  <title>VIPS | Virtual Interactive Processing Service</title>
+  <meta name="description" content="Premium virtual tours and live experiences by Virtual Interactive Processing Service." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07111f;
-      --bg-secondary: #0d1b2a;
-      --card: rgba(255, 255, 255, 0.06);
-      --card-solid: #102033;
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --accent: #14b8a6;
-      --accent-dark: #0f766e;
-      --accent-glow: rgba(20, 184, 166, 0.35);
-      --border: rgba(255, 255, 255, 0.12);
-      --gold: #fbbf24;
+      --background: #050505;
+      --surface: #101014;
+      --surface-2: #16161b;
+      --primary: #E5A93D;
+      --secondary: #222226;
+      --text-primary: #F3EFE7;
+      --text-secondary: #A0A0A5;
+      --border: #2A2A2E;
+      --accent-hover: #F0C06A;
+      --success: #6ee7b7;
+      --danger: #f87171;
+      --shadow: 0 18px 40px rgba(0,0,0,.35);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(20, 184, 166, 0.18), transparent 35%),
-        radial-gradient(circle at top right, rgba(251, 191, 36, 0.12), transparent 30%),
-        linear-gradient(180deg, #06101d 0%, #0a1625 35%, #0d1b2a 100%);
-      color: var(--text);
-      line-height: 1.6;
+      font-family: 'Manrope', sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
-    .wrap {
-      max-width: 1180px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      z-index: 9999;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 40px));
       margin: 0 auto;
-      padding: 0 20px;
     }
 
-    header {
+    .font-heading {
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .font-elegant {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #E5A93D 0%, #F0C06A 50%, #E5A93D 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .25em;
+      color: var(--primary);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-weight: 700;
+      transition: .25s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .site-header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      backdrop-filter: blur(12px);
-      background: rgba(6, 16, 29, 0.78);
-      border-bottom: 1px solid var(--border);
+      background: rgba(5,5,5,.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .site-header .container {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      font-size: 34px;
+      font-style: italic;
+      line-height: 1;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      color: var(--text-secondary);
+      font-size: 12px;
     }
 
     .nav {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 18px 0;
+      gap: 26px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    .brand {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 0.3px;
+    .nav a {
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 14px;
+      transition: color .2s ease;
     }
 
-    .brand span {
-      color: var(--accent);
-    }
-
-    .nav-note {
-      color: var(--muted);
-      font-size: 15px;
-      text-align: right;
+    .nav a:hover {
+      color: var(--primary);
     }
 
     .hero {
-      padding: 90px 0 50px;
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 110px 0 70px;
+      background:
+        linear-gradient(to bottom, rgba(5,5,5,.35) 0%, rgba(5,5,5,.72) 56%, rgba(5,5,5,1) 100%),
+        url('https://images.unsplash.com/photo-1588336443962-49d88df004a1?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
-      align-items: stretch;
+      grid-template-columns: 1.3fr .9fr;
+      gap: 40px;
+      align-items: end;
     }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 30px;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
-    }
-
-    .hero-main {
-      background:
-        linear-gradient(135deg, rgba(20, 184, 166, 0.14), rgba(255, 255, 255, 0.03)),
-        rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(20, 184, 166, 0.22);
-    }
-
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 16px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(20, 184, 166, 0.14);
-      color: #99f6e4;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+    .hero-copy h1 {
+      margin: 0 0 18px;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: .95;
       text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: -.03em;
     }
 
-    h1 {
-      font-size: 50px;
-      line-height: 1.08;
-      margin: 0 0 16px;
-    }
-
-    h2 {
-      font-size: 30px;
-      margin: 0 0 14px;
-    }
-
-    h3 {
-      font-size: 21px;
-      margin: 0 0 12px;
-    }
-
-    .lead {
-      font-size: 19px;
-      color: var(--muted);
-      margin: 0 0 24px;
-      max-width: 720px;
-    }
-
-    .hero-copy p,
-    .card p,
-    li {
-      color: #e2e8f0;
+    .hero-copy p {
+      color: var(--text-secondary);
+      font-size: clamp(18px, 2.4vw, 22px);
+      line-height: 1.7;
+      max-width: 700px;
+      margin: 0 0 30px;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin-top: 24px;
+      margin-bottom: 28px;
     }
 
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      padding: 15px 24px;
-      border-radius: 14px;
-      font-weight: 800;
-      transition: 0.2s ease;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 10px 30px var(--accent-glow);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      background: #11a99a;
-    }
-
-    .btn-secondary {
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: min(760px, 100%);
+      background: rgba(16,16,20,.92);
       border: 1px solid var(--border);
-      color: white;
-      background: rgba(255, 255, 255, 0.04);
+      border-radius: 999px;
+      padding: 10px 10px 10px 20px;
+      box-shadow: var(--shadow);
     }
 
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.08);
+    .search-bar input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      color: var(--text-primary);
+      border: none;
+      outline: none;
+      font-size: 16px;
     }
 
-    .notice {
-      margin-top: 18px;
-      font-size: 14px;
-      color: #93c5fd;
+    .search-bar input::placeholder {
+      color: var(--text-secondary);
     }
 
-    .highlight-box {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+    .hero-card {
+      background: rgba(16,16,20,.82);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: var(--shadow);
     }
 
-    .mini-stat {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
+    .hero-card h3 {
+      margin: 0 0 14px;
+      font-size: 20px;
     }
 
-    .mini-stat strong {
-      display: block;
-      font-size: 24px;
-      margin-bottom: 6px;
-      color: white;
-    }
-
-    .mini-stat span {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .list {
+    .hero-card ul {
       margin: 0;
-      padding-left: 20px;
+      padding-left: 18px;
+      color: var(--text-secondary);
+      line-height: 1.8;
     }
 
-    .list li {
-      margin-bottom: 10px;
+    .scroll-indicator {
+      margin-top: 26px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
     }
 
     section {
-      padding: 28px 0;
+      padding: 92px 0;
     }
 
-    .section-heading {
-      margin-bottom: 22px;
+    .section-head {
+      margin-bottom: 34px;
     }
 
-    .grid-3 {
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .section-head p {
+      color: var(--text-secondary);
+      max-width: 760px;
+      line-height: 1.7;
+      margin-top: 14px;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .category-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      min-height: 280px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: end;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 48px rgba(0,0,0,.45);
+    }
+
+    .category-card.large {
+      grid-column: span 8;
+      min-height: 360px;
+    }
+
+    .category-card.small {
+      grid-column: span 4;
+    }
+
+    .category-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease;
+    }
+
+    .category-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .category-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.92), rgba(0,0,0,.18));
+    }
+
+    .category-content {
+      position: relative;
+      z-index: 1;
+      padding: 26px;
+      width: 100%;
+    }
+
+    .category-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .category-content h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .category-content p {
+      margin: 0;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    .featured {
+      background: var(--surface);
+    }
+
+    .tour-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
     }
 
-    .info-card {
-      background: var(--card);
+    .tour-card {
+      background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 26px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, border-color .25s ease;
     }
 
-    .info-card h3 {
-      color: white;
+    .tour-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(229,169,61,.35);
     }
 
-    .step-number {
-      width: 42px;
-      height: 42px;
+    .tour-card-image {
+      position: relative;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+
+    .tour-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+
+    .tour-card:hover .tour-card-image img {
+      transform: scale(1.05);
+    }
+
+    .price-tag,
+    .featured-tag {
+      position: absolute;
+      top: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .price-tag {
+      right: 14px;
+      background: var(--primary);
+      color: #000;
+    }
+
+    .featured-tag {
+      left: 14px;
+      background: rgba(0,0,0,.65);
+      color: var(--text-primary);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .tour-body {
+      padding: 20px;
+    }
+
+    .tour-meta {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .tour-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .tour-card p {
+      margin: 0 0 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .tour-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about-copy p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .highlight-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .highlight-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      color: var(--text-primary);
+    }
+
+    .check {
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(20, 184, 166, 0.15);
-      color: #99f6e4;
+      background: rgba(229,169,61,.14);
+      color: var(--primary);
+      flex: 0 0 auto;
       font-weight: 800;
-      margin-bottom: 14px;
-      border: 1px solid rgba(20, 184, 166, 0.25);
     }
 
-    .disclosure {
-      background:
-        linear-gradient(135deg, rgba(20, 184, 166, 0.12), rgba(251, 191, 36, 0.07)),
-        rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(20, 184, 166, 0.25);
-      border-radius: 22px;
-      padding: 28px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.24);
+    .about-visual {
+      position: relative;
+      min-height: 420px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.06);
     }
 
-    .disclosure h2 {
-      color: white;
+    .about-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .support-card {
-      background: linear-gradient(180deg, rgba(16, 32, 51, 0.95), rgba(9, 19, 32, 0.95));
+    .about-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(5,5,5,.88), rgba(5,5,5,.08));
     }
 
-    .support-card a {
-      color: #7dd3fc;
-      text-decoration: none;
+    .stat-box {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1;
+      background: var(--primary);
+      color: #000;
+      padding: 24px 26px;
+      border-radius: 18px;
+      min-width: 150px;
+      box-shadow: 0 18px 30px rgba(0,0,0,.35);
     }
 
-    footer {
-      padding: 42px 0 60px;
-      color: #94a3b8;
-      font-size: 14px;
+    .stat-box strong {
+      display: block;
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .contact {
+      background: var(--surface);
       text-align: center;
     }
 
-    @media (max-width: 980px) {
+    .contact p {
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 14px auto 30px;
+      line-height: 1.8;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .site-footer {
+      padding: 30px 0 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-row p,
+    .footer-row span {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .empty-state {
+      padding: 26px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 18px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 1024px) {
       .hero-grid,
-      .grid-3,
-      .highlight-box {
+      .about-grid {
         grid-template-columns: 1fr;
       }
 
-      h1 {
-        font-size: 38px;
+      .category-card.large,
+      .category-card.small {
+        grid-column: span 6;
+      }
+
+      .tour-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .nav {
-        flex-direction: column;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .site-header .container {
+        padding-top: 12px;
+        padding-bottom: 12px;
         align-items: flex-start;
+        flex-direction: column;
       }
 
-      .nav-note {
-        text-align: left;
+      .nav {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 160px;
+      }
+
+      .search-bar {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 22px;
+        padding: 14px;
+      }
+
+      .search-bar .btn-primary {
+        width: 100%;
+      }
+
+      .category-card.large,
+      .category-card.small {
+        grid-column: span 12;
+      }
+
+      .tour-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-actions {
+        flex-direction: column;
+      }
+
+      .contact-actions a {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
-      <div class="brand">Virtual Interactive Processing Service <span>LLC</span></div>
-      <div class="nav-note">VIP Zoom Presentation Access</div>
+  <header class="site-header">
+    <div class="container">
+      <a href="#top" class="brand">
+        <div class="brand-mark text-gold-gradient font-elegant">VIPS</div>
+        <div class="brand-text">
+          <div class="brand-title">Virtual Interactive Processing Service</div>
+          <div class="brand-subtitle">Premium virtual tours and live experiences</div>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="#categories">Categories</a>
+        <a href="#featured">Featured</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
 
-  <main>
+  <main id="top">
     <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="card hero-main">
-          <div class="eyebrow">VIP Zoom Access</div>
-          <img src="ChatGPT Image Apr 18, 2026, 06_18_05 PM.png" alt="VIPS logo" style="max-width: 320px; width: 100%; display: block; margin: 0 auto 25px auto;">
-          <h1>Reserve Your VIP Zoom Presentation Access</h1>
-          <p class="lead">
-            A more professional, polished presentation access page designed to clearly explain what the customer is purchasing while creating stronger visual impact.
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="section-label">Virtual Interactive Processing Service</div>
+          <h1 class="font-heading">
+            <span>Experience</span><br>
+            <span class="font-elegant text-gold-gradient" style="text-transform:none; font-weight:500; font-style:italic;">the Extraordinary</span>
+          </h1>
+          <p>
+            Premium virtual tours and live experiences. From celebrity homes to immersive adventures, access worlds you’ve only dreamed of.
           </p>
-
-          <div class="hero-copy">
-            <p>
-              Virtual Interactive Processing Service provides access to a live Zoom-based presentation, customer coordination, and post-presentation next-step guidance.
-            </p>
-            <p>
-              Customers purchase <strong>VIP Zoom Presentation Access only</strong>. Virtual Interactive Processing Service does <strong>not</strong> sell directly confirmed hotel stays, airfare, cruises, resort reservations, or vacation itineraries.
-            </p>
-          </div>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#disclosures">View Important Disclosures</a>
-            <a class="btn btn-secondary" href="#support">Contact Support</a>
+            <a class="btn-primary" href="#featured">Explore Experiences</a>
+            <a class="btn-secondary" href="#contact">Contact Support</a>
           </div>
 
-          <div class="notice">
-            Customers have up to 30 days from purchase to complete the required Zoom presentation.
-          </div>
+          <form class="search-bar" id="searchForm">
+            <input type="text" id="searchInput" placeholder="Search tours or categories..." />
+            <button type="submit" class="btn-primary">Search</button>
+          </form>
 
-          <div class="highlight-box">
-            <div class="mini-stat">
-              <strong>30 Days</strong>
-              <span>To complete presentation</span>
+          <div class="scroll-indicator">Scroll to explore</div>
+        </div>
+
+        <aside class="hero-card">
+          <h3>Why VIPS</h3>
+          <ul>
+            <li>Luxury-styled virtual access experiences</li>
+            <li>Live presentation and premium tour positioning</li>
+            <li>Fast contact options and streamlined browsing</li>
+            <li>Dark, modern design built to convert better</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="categories">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-label">Explore</div>
+          <h2 class="font-heading">Tour <span class="font-elegant text-gold-gradient" style="text-transform:none; font-weight:500; font-style:italic;">Categories</span></h2>
+          <p>Browse the signature categories inspired by your original app layout and theme.</p>
+        </div>
+
+        <div class="bento-grid" id="categoryGrid">
+          <article class="category-card large searchable" data-search="celebrity estates celebrity homes luxury mansions">
+            <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80" alt="Celebrity estates" />
+            <div class="category-content">
+              <div class="category-icon">👑</div>
+              <h3>Celebrity Estates</h3>
+              <p>Explore luxurious virtual tours inspired by high-end celebrity homes and elite properties.</p>
             </div>
-            <div class="mini-stat">
-              <strong>60 Min</strong>
-              <span>Approximate presentation length</span>
+          </article>
+
+          <article class="category-card small searchable" data-search="virtual reality vr immersive adventures">
+            <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=1200&q=80" alt="VR adventures" />
+            <div class="category-content">
+              <div class="category-icon">🥽</div>
+              <h3>VR Adventures</h3>
+              <p>Step into immersive digital experiences designed to feel bigger, richer, and more memorable.</p>
             </div>
-            <div class="mini-stat">
-              <strong>Live Zoom</strong>
-              <span>Presentation-based access only</span>
+          </article>
+
+          <article class="category-card small searchable" data-search="business executive leadership experiences">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80" alt="Executive access" />
+            <div class="category-content">
+              <div class="category-icon">💼</div>
+              <h3>Executive Access</h3>
+              <p>Professional-grade experiences for clients who want a more polished and elevated presentation.</p>
             </div>
+          </article>
+
+          <article class="category-card small searchable" data-search="wellness fitness training coaching">
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80" alt="Wellness and fitness" />
+            <div class="category-content">
+              <div class="category-icon">💪</div>
+              <h3>Wellness & Fitness</h3>
+              <p>High-energy virtual experiences centered around performance, discipline, and lifestyle.</p>
+            </div>
+          </article>
+
+          <article class="category-card large searchable" data-search="education learning mastermind premium coaching">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Mastermind sessions" />
+            <div class="category-content">
+              <div class="category-icon">🎓</div>
+              <h3>Mastermind Sessions</h3>
+              <p>Premium learning-driven experiences with a luxury presentation feel and strong visual impact.</p>
+            </div>
+          </article>
+        </div>
+        <div id="categoryEmpty" class="empty-state hidden">No categories matched that search.</div>
+      </div>
+    </section>
+
+    <section class="featured" id="featured">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-label">Curated For You</div>
+          <h2 class="font-heading">Featured <span class="font-elegant text-gold-gradient" style="text-transform:none; font-weight:500; font-style:italic;">Experiences</span></h2>
+          <p>These sample featured experiences keep the spirit of the original app, but in a format that works directly on GitHub Pages.</p>
+        </div>
+
+        <div class="tour-grid" id="tourGrid">
+          <article class="tour-card searchable" data-search="celebrity mansion luxury home tour estate">
+            <div class="tour-card-image">
+              <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80" alt="Celebrity Mansion Tour" />
+              <div class="featured-tag">Featured</div>
+              <div class="price-tag">$79.00</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-meta">Approx. 60 minutes</div>
+              <h3>Celebrity Mansion Tour</h3>
+              <p>Luxury-focused virtual presentation inspired by premium homes, style, and elite access.</p>
+              <div class="tour-actions">
+                <a class="btn-primary" href="#contact">Book Interest</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="tour-card searchable" data-search="vr headset futuristic immersive digital">
+            <div class="tour-card-image">
+              <img src="https://images.unsplash.com/photo-1626379953822-baec19c3accd?auto=format&fit=crop&w=1200&q=80" alt="Immersive VR Experience" />
+              <div class="featured-tag">Featured</div>
+              <div class="price-tag">$59.00</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-meta">Approx. 45 minutes</div>
+              <h3>Immersive VR Experience</h3>
+              <p>Showcase an engaging futuristic experience with bold visuals and a premium feel.</p>
+              <div class="tour-actions">
+                <a class="btn-primary" href="#contact">Book Interest</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="tour-card searchable" data-search="business executive behind the scenes corporate">
+            <div class="tour-card-image">
+              <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80" alt="Executive Insider Access" />
+              <div class="price-tag">$89.00</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-meta">Approx. 50 minutes</div>
+              <h3>Executive Insider Access</h3>
+              <p>Built for a polished, upscale business audience with strong authority and trust cues.</p>
+              <div class="tour-actions">
+                <a class="btn-primary" href="#contact">Book Interest</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="tour-card searchable" data-search="wellness elite performance fitness">
+            <div class="tour-card-image">
+              <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80" alt="Elite Wellness Session" />
+              <div class="price-tag">$49.00</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-meta">Approx. 40 minutes</div>
+              <h3>Elite Wellness Session</h3>
+              <p>A sleek lifestyle experience positioned around discipline, energy, and transformation.</p>
+              <div class="tour-actions">
+                <a class="btn-primary" href="#contact">Book Interest</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="tour-card searchable" data-search="mastermind learning coaching strategy">
+            <div class="tour-card-image">
+              <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1200&q=80" alt="Private Mastermind Access" />
+              <div class="featured-tag">Featured</div>
+              <div class="price-tag">$99.00</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-meta">Approx. 75 minutes</div>
+              <h3>Private Mastermind Access</h3>
+              <p>Premium learning-focused presentation that feels exclusive, elevated, and high-value.</p>
+              <div class="tour-actions">
+                <a class="btn-primary" href="#contact">Book Interest</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="tour-card searchable" data-search="luxury destination travel style vip">
+            <div class="tour-card-image">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" alt="Luxury Destination Preview" />
+              <div class="price-tag">$69.00</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-meta">Approx. 55 minutes</div>
+              <h3>Luxury Destination Preview</h3>
+              <p>Visually rich destination-style content with a refined VIP presentation approach.</p>
+              <div class="tour-actions">
+                <a class="btn-primary" href="#contact">Book Interest</a>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div id="tourEmpty" class="empty-state hidden">No featured experiences matched that search.</div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-copy">
+          <div class="section-label">About VIPS</div>
+          <h2 class="font-heading">Your Gateway to <span class="font-elegant text-gold-gradient" style="text-transform:none; font-weight:500; font-style:italic;">Exclusive Access</span></h2>
+          <p>
+            Virtual Interactive Processing Service provides access to live presentations, premium digital experiences, and visually elevated online showcases built to feel more exclusive and memorable.
+          </p>
+          <p>
+            This static version is designed to get your site live fast on GitHub Pages while keeping the luxury look and major sections from your original app.
+          </p>
+
+          <div class="highlight-list">
+            <div class="highlight-item"><span class="check">✓</span><span>Luxury dark-and-gold presentation style</span></div>
+            <div class="highlight-item"><span class="check">✓</span><span>Featured experiences and category browsing</span></div>
+            <div class="highlight-item"><span class="check">✓</span><span>Search bar that filters the page instantly</span></div>
+            <div class="highlight-item"><span class="check">✓</span><span>Clean GitHub Pages-compatible structure</span></div>
           </div>
         </div>
 
-        <div class="card">
-          <h3>What This Purchase Includes</h3>
-          <ul class="list">
-            <li>Access to a live VIP Zoom presentation</li>
-            <li>Customer support and scheduling coordination</li>
-            <li>Post-presentation next-step guidance</li>
-            <li>Written disclosures before purchase completion</li>
-          </ul>
-
-          <h3 style="margin-top: 24px;">What This Purchase Does Not Include</h3>
-          <ul class="list">
-            <li>No directly confirmed hotel reservation</li>
-            <li>No airfare, cruise, or resort booking</li>
-            <li>No immediate vacation itinerary</li>
-            <li>No direct fulfillment by Virtual Interactive Processing Service</li>
-          </ul>
+        <div class="about-visual">
+          <img src="https://images.unsplash.com/photo-1647101734210-ff5d79813069?auto=format&fit=crop&w=1200&q=80" alt="Premium experience" />
+          <div class="stat-box">
+            <strong>10+</strong>
+            <span>Experience concepts</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="wrap">
-        <div class="section-heading">
-          <h2>How the Process Works</h2>
-        </div>
-
-        <div class="grid-3">
-          <div class="info-card">
-            <div class="step-number">1</div>
-            <h3>Purchase Access</h3>
-            <p>
-              The customer purchases VIP Zoom Presentation Access and receives written disclosures and purchase terms.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <div class="step-number">2</div>
-            <h3>Complete the Zoom</h3>
-            <p>
-              The customer completes the required live Zoom presentation within 30 days of purchase, subject to scheduling availability and participation requirements.
-            </p>
-          </div>
-
-          <div class="info-card">
-            <div class="step-number">3</div>
-            <h3>Third-Party Fulfillment, If Applicable</h3>
-            <p>
-              After presentation completion, any related options, registration, accommodations access, or other fulfillment are handled separately by a third-party provider, subject to availability, eligibility, and provider terms.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="disclosures">
-      <div class="wrap">
-        <div class="disclosure">
-          <h2>Important Disclosures</h2>
-          <p>
-            Virtual Interactive Processing Service sells <strong>VIP Zoom Presentation Access only</strong>. Customers are <strong>not</strong> purchasing a directly confirmed hotel stay, airfare, cruise reservation, resort reservation, or directly confirmed vacation itinerary from Virtual Interactive Processing Service.
-          </p>
-          <p>
-            Any related package redemption, invitation delivery, destination selection, registration, reservation access, accommodations access, or other related fulfillment that may occur after completion of the required presentation is handled separately by a <strong>third-party provider</strong>, not by Virtual Interactive Processing Service.
-          </p>
-          <p>
-            Any related options made available after presentation completion may be subject to availability, provider procedures, registration requirements, scheduling restrictions, blackout dates, inventory limitations, separate fees, taxes, resort fees, service fees, incidental charges, and third-party provider terms and eligibility requirements.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap grid-3">
-        <div class="info-card">
-          <h3>Presentation Requirements</h3>
-          <ul class="list">
-            <li>Approximately 60 minutes</li>
-            <li>Desktop, laptop, or iPad required</li>
-            <li>Working camera and microphone required</li>
-            <li>Cell phone participation not permitted</li>
-          </ul>
-        </div>
-
-        <div class="info-card">
-          <h3>Refund / Cancellation Summary</h3>
-          <p>
-            Refund requests may be reviewed if submitted within 30 days of purchase and before the required Zoom presentation has been completed, unless scheduling, support, or related fulfillment has already substantially begun.
-          </p>
-          <p>
-            Once the required Zoom presentation has been completed, the purchase is non-refundable, except where prohibited by applicable law.
-          </p>
-        </div>
-
-        <div class="info-card support-card" id="support">
-          <h3>Support</h3>
-          <p>
-            Customers have the opportunity to contact support regarding scheduling, purchase questions, and order-related clarification.
-          </p>
-          <p>
-            Email: <a href="mailto: info@viptours365.com"> info@viptours365.com</a><br />
-            Phone: (833) 383-5650
-          </p>
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="section-label">Get In Touch</div>
+        <h2 class="font-heading">Questions? <span class="font-elegant text-gold-gradient" style="text-transform:none; font-weight:500; font-style:italic;">We're Here</span></h2>
+        <p>
+          Our support team is ready to help with scheduling, purchase questions, and order-related clarification.
+        </p>
+        <div class="contact-actions">
+          <a class="btn-primary" href="mailto:info@viptours365.com">info@viptours365.com</a>
+          <a class="btn-secondary" href="tel:8333835650">(833) 383-5650</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="wrap">
-      © 2026 Virtual Interactive Processing Service.
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div class="brand">
+        <div class="brand-mark text-gold-gradient font-elegant">VIPS</div>
+        <span>Virtual Interactive Processing Service LLC</span>
+      </div>
+      <p>© 2026 Virtual Interactive Processing Service. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const searchables = document.querySelectorAll('.searchable');
+    const categoryGrid = document.getElementById('categoryGrid');
+    const tourGrid = document.getElementById('tourGrid');
+    const categoryEmpty = document.getElementById('categoryEmpty');
+    const tourEmpty = document.getElementById('tourEmpty');
+
+    function runSearch(query) {
+      const q = query.trim().toLowerCase();
+      let visibleCategories = 0;
+      let visibleTours = 0;
+
+      searchables.forEach(item => {
+        const haystack = item.dataset.search.toLowerCase();
+        const match = !q || haystack.includes(q);
+        item.classList.toggle('hidden', !match);
+
+        if (match && categoryGrid.contains(item)) visibleCategories++;
+        if (match && tourGrid.contains(item)) visibleTours++;
+      });
+
+      categoryEmpty.classList.toggle('hidden', visibleCategories > 0 || !q);
+      tourEmpty.classList.toggle('hidden', visibleTours > 0 || !q);
+
+      if (q) {
+        document.getElementById('featured').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    searchForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      runSearch(searchInput.value);
+    });
+  </script>
 </body>
 </html>
