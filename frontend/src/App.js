@@ -1,6 +1,3 @@
-
-Action: file_editor view /app/frontend/src/App.js
-Observation: [Showing lines 1-855 of 855 total] /app/frontend/src/App.js:
 1|import { useEffect, useState } from "react";
 2|import "@/App.css";
 3|import { BrowserRouter, Routes, Route, Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
