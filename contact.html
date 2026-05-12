@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | VIPTours365</title>
+  <meta name="description" content="Contact VIPTours365 support for VIP Travel Presentation Access, billing descriptor, scheduling assistance, and service clarification." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --background: #050505;
+      --surface: #101014;
+      --surface-2: #17171c;
+      --primary: #E5A93D;
+      --accent-hover: #F0C06A;
+      --text-primary: #F3EFE7;
+      --text-secondary: #A7A7AD;
+      --border: #2A2A2E;
+      --shadow: 0 18px 40px rgba(0,0,0,.38);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Manrope', sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      z-index: 9999;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1050px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .font-elegant { font-family: 'Cormorant Garamond', serif; }
+
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #E5A93D 0%, #F0C06A 50%, #E5A93D 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5,5,5,.86);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .site-header .container {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .logo-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(229,169,61,.24), rgba(229,169,61,.08));
+      border: 1px solid rgba(229,169,61,.35);
+      color: var(--primary);
+      font-weight: 900;
+      letter-spacing: .05em;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      color: var(--text-secondary);
+      font-weight: 700;
+      font-size: 14px;
+      transition: color .2s ease;
+    }
+
+    .nav a:hover { color: var(--primary); }
+
+    .page-hero {
+      padding: 90px 0 38px;
+      background:
+        radial-gradient(circle at 75% 25%, rgba(229,169,61,.12), transparent 34%),
+        linear-gradient(to bottom, rgba(5,5,5,1), rgba(16,16,20,.92));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .section-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .25em;
+      color: var(--primary);
+      margin-bottom: 14px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+
+    .page-hero p {
+      color: var(--text-secondary);
+      max-width: 760px;
+      font-size: 17px;
+      line-height: 1.75;
+      margin: 22px 0 0;
+    }
+
+    .content-section { padding: 58px 0 90px; }
+
+    .content-card {
+      background: rgba(23,23,28,.92);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: clamp(26px, 4vw, 48px);
+    }
+
+    .content-card h2 {
+      margin: 34px 0 12px;
+      font-size: 24px;
+      color: var(--text-primary);
+    }
+
+    .content-card h2:first-child { margin-top: 0; }
+
+    .content-card p {
+      color: var(--text-secondary);
+      line-height: 1.85;
+      margin: 0 0 18px;
+      font-size: 16px;
+    }
+
+    .notice {
+      border-left: 4px solid var(--primary);
+      background: rgba(229,169,61,.07);
+      padding: 22px 24px;
+      border-radius: 18px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin: 28px 0;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-weight: 800;
+      transition: .25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #050505;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .site-footer {
+      padding: 32px 0 44px;
+      border-top: 1px solid var(--border);
+      background: #050505;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-row p,
+    .footer-row span {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: color .2s ease;
+    }
+
+    .footer-links a:hover { color: var(--primary); }
+
+    @media (max-width: 720px) {
+      .site-header .container {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .footer-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .contact-actions a {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/index.html" class="brand">
+        <div class="logo-mark">VIPS</div>
+        <div class="brand-text">
+          <div class="brand-title">Virtual Interactive Processing Services</div>
+          <div class="brand-subtitle">VIP Travel Presentation Access and digital coordination</div>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="/index.html#how-it-works">How It Works</a>
+        <a href="/index.html#service">What’s Included</a>
+        <a href="/index.html#disclosures">Disclosures</a>
+        <a href="/index.html#support">Support</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="section-label">Support</div>
+        <h1>Contact <span class="font-elegant text-gold-gradient" style="text-transform:none; font-weight:500; font-style:italic;">VIPS</span></h1>
+        <p>
+          Contact VIPTours365 support for questions about your VIPS purchase, payment, billing descriptor, presentation access, scheduling assistance, or service clarification.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+        <div class="content-card">
+          <h2>Customer Support</h2>
+          <p>
+            For questions about your VIPS purchase, payment, billing descriptor, presentation access, scheduling assistance, service clarification, or refund review, contact VIPS support.
+          </p>
+
+          <div class="notice">
+            VIPS support assists with questions related to the VIPS purchase and presentation access service. Post-presentation promotional travel incentive fulfillment is handled separately by independent third-party providers.
+          </div>
+
+          <h2>Support Details</h2>
+          <p><strong>Email:</strong> info@viptours365.com</p>
+          <p><strong>Phone:</strong> 833-383-5650</p>
+          <p><strong>Support Hours:</strong> Monday through Friday, 8:00 AM - 6:00 PM Eastern Time</p>
+
+          <div class="contact-actions">
+            <a class="btn-primary" href="mailto:info@viptours365.com">Email Support</a>
+            <a class="btn-secondary" href="tel:8333835650">Call 833-383-5650</a>
+          </div>
+
+          <a class="btn-primary" href="/index.html" style="margin-top:28px;">Return to Homepage</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div class="brand">
+        <div class="logo-mark">VIPS</div>
+        <span>Virtual Interactive Processing Services LLC</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="/terms.html">Terms & Conditions</a>
+        <a href="/refund-policy.html">Refund Policy</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/third-party-disclosure.html">Third-Party Incentive Disclosure</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+
+      <p>© 2026 Virtual Interactive Processing Services. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
